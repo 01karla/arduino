@@ -1,0 +1,205 @@
+#include <HTTPClient.h>
+
+#include <WiFi.h>
+
+
+const char* ssid = "moto g22_2509";
+const char* password = "karla684";
+
+void setup() {
+  pinMode(32, INPUT); // GPIO 32 corresponde a A0
+  pinMode(33, INPUT); // GPIO 33 corresponde a A1
+  pinMode(34, INPUT); // GPIO 34 corresponde a A2
+  pinMode(35, INPUT); // GPIO 35 corresponde a A3
+  pinMode(25, INPUT); // GPIO 36 corresponde a A4
+
+  Serial.begin(115200);
+
+  // Conectarse a la red Wi-Fi
+  WiFi.begin(ssid, password);
+  Serial.print("Conectando a ");
+  Serial.print(ssid);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println(" Conectado");
+
+  // Loop principal
+  while (true) {
+    obtenerLetra(); // Llama a la función para obtener el valor de la letra
+    delay(1500); // Espera antes de volver a leer los sensores
+  }
+}
+
+void loop() {
+  // No se necesita código aquí, todo está en la función setup()
+}
+
+void obtenerLetra() {
+  int lecturaPulgar = analogRead(32); // GPIO 32 corresponde a A0
+  int lecturaIndice = analogRead(33); // GPIO 33 corresponde a A1
+  int lecturaMedio = analogRead(34); // GPIO 34 corresponde a A2
+  int lecturaAnular = analogRead(35); // GPIO 35 corresponde a A3
+  int lecturaMenique = analogRead(25); // GPIO 36 corresponde a A4
+
+    int  suma=0;
+    int finalletra = suma;
+  Serial.print(lecturaPulgar);
+  Serial.print(",");
+  Serial.print(lecturaIndice);
+  Serial.print(",");
+  Serial.print(lecturaMedio);
+  Serial.print(",");
+  Serial.print(lecturaAnular);
+  Serial.print(",");
+  Serial.print(lecturaMenique);
+  Serial.print(",");
+  delay(1500);
+
+  //------ SIN SEÑAL -----------
+
+  if (lecturaPulgar <=0 && lecturaIndice <=0 && lecturaMedio <=0 && lecturaAnular <=0 && lecturaMenique <=0 ){
+    //------Letra "------"
+    Serial.println("---------- SIN SEÑAL ---------");
+    delay(300);
+  }
+
+  // ------ LETRA A -----------
+   if (lecturaPulgar >=500 && lecturaPulgar <=560  && lecturaIndice <=350 && lecturaMedio <=320 && lecturaAnular <=400 && lecturaMenique <=500 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra A------");
+    Serial.println(suma);
+    finalletra=1;
+    Serial.println(finalletra);
+    delay(300);
+  }
+
+  // ------ LETRA B -----------
+   if (lecturaPulgar >=300 && lecturaPulgar <=430  && lecturaIndice >=350 && lecturaIndice <=500 && lecturaMedio >=400 && lecturaMedio <=600 && lecturaAnular >=550 && lecturaAnular <=600 && lecturaMenique >=600 && lecturaMenique <=700 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra B------");
+    Serial.println(suma);
+    finalletra=2;
+    Serial.println(finalletra);
+    delay(300);
+  }
+
+  // ------ LETRA C -----------
+   if (lecturaPulgar >=350 && lecturaPulgar <=450 && lecturaIndice >=330 && lecturaIndice <=400 && lecturaMedio >=350 && lecturaMedio <=395 && lecturaAnular >=340 && lecturaAnular <=418 && lecturaMenique >=520 && lecturaMenique <=610 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra C------");
+    Serial.println(suma);
+    finalletra=3;
+    Serial.println(finalletra);
+    delay(300);
+  }
+
+  // ------ LETRA D -----------
+   if (lecturaPulgar <=450  && lecturaIndice >=400 && lecturaMedio <=350 && lecturaAnular <=400 && lecturaMenique <=500 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra D------");
+    Serial.println(suma);
+    finalletra=4;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // ------ LETRA E -----------
+   if (lecturaPulgar >=350 &&  lecturaPulgar <=390  && lecturaIndice >=245 && lecturaIndice <=320 && lecturaMedio >=300 && lecturaMedio <=340 && lecturaAnular >=320 && lecturaAnular <=410 && lecturaMenique >=400 && lecturaMenique <=485 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra E------");
+    Serial.println(suma);
+    finalletra=5;
+    Serial.println(finalletra);
+    delay(300);
+  }
+
+  // ------ LETRA F -----------
+   if (lecturaPulgar >=350  && lecturaPulgar <=450 && lecturaIndice >=230 && lecturaIndice <=320 && lecturaMedio >=500 && lecturaAnular >=560 && lecturaMenique >=600 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra F------");
+    Serial.println(suma);
+    finalletra=6;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // ------ LETRA G -----------
+   if (lecturaPulgar >=470 && lecturaPulgar <=560  && lecturaIndice >=350 && lecturaMedio <=320 && lecturaAnular <=400 && lecturaMenique <=450 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra G------");
+    Serial.println(suma);
+    finalletra=7;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // ------ LETRA H -----------
+   if ( lecturaPulgar <=400  && lecturaIndice >=350 && lecturaMedio >=320 && lecturaAnular <=400 && lecturaMenique <=450 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra H------");
+    Serial.println(suma);
+    finalletra=8;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // ------ LETRA I -----------
+   if (lecturaPulgar <=400   && lecturaIndice <=350 && lecturaMedio <=320 && lecturaAnular <=400 && lecturaMenique >=600 && lecturaMenique <=660 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra I------");
+    Serial.println(suma);
+    finalletra=9;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // ------ LETRA J -----------
+   if (lecturaPulgar <=470 && lecturaIndice <=350 && lecturaMedio <=320 && lecturaAnular <=400 && lecturaMenique >=661 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra J------");
+    Serial.println(suma);
+    finalletra=10;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // ------ LETRA K -----------
+   if (lecturaPulgar >=500   && lecturaIndice >=350 && lecturaMedio >=400 && lecturaAnular <=400 && lecturaMenique <=450 ){
+    //------Letra "------"
+    suma = lecturaPulgar+lecturaIndice+ lecturaIndice + lecturaMedio + lecturaAnular + lecturaMenique; 
+    Serial.println("------Letra K------");
+    Serial.println(suma);
+    finalletra=11;
+    Serial.println(finalletra);
+    delay(300);
+  }
+  // Realizar solicitud HTTP
+  HTTPClient http;
+
+  Serial.print("Realizando solicitud HTTP...");
+
+  // Construir la URL con el resultado de la letra
+  String url = "https://api-kbj.onrender.com/api_KBJ/letra/" + String(finalletra);
+  http.begin(url);
+
+  int httpCode = http.GET();
+
+  if (httpCode > 0) {
+    Serial.print("Código de estado HTTP: ");
+    Serial.println(httpCode);
+
+    String payload = http.getString();
+    Serial.println("Respuesta del servidor:");
+    Serial.println(payload);
+  } else {
+    Serial.println("Error en la solicitud HTTP");
+  }
+
+  http.end();  // Cerrar la conexión HTTP
+}
