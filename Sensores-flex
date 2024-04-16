@@ -1,50 +1,41 @@
-#include <HTTPClient.h>
+#if USE_LIBRARY_SPI
+#include < SPI.h>
+#endif
 
-#include <WiFi.h>
+//----------------------------------------------
 
+int pulgar = A0;
+int lecturaPulgar = 0 ;
+int indice = A1;
+int lecturaIndice =0;
+int medio = A2;
+int lecturaMedio = 0;
+int anular = A3;
+int lecturaAnular = 0;
+int  menique =  A4; 
+int lecturaMenique =0;
+int  suma=0;
+int finalletra = suma;
+//-----------------------------------------------
 
-const char* ssid = "moto g22_2509";
-const char* password = "karla684";
+void setup(void) {
+ 
+ Serial.begin(9600);
+ pinMode(pulgar, INPUT);
+ pinMode(indice, INPUT);
+ pinMode(medio, INPUT);
+ pinMode(anular, INPUT);
+ pinMode(menique, INPUT);
 
-void setup() {
-  pinMode(32, INPUT); // GPIO 32 corresponde a A0
-  pinMode(33, INPUT); // GPIO 33 corresponde a A1
-  pinMode(34, INPUT); // GPIO 34 corresponde a A2
-  pinMode(35, INPUT); // GPIO 35 corresponde a A3
-  pinMode(25, INPUT); // GPIO 36 corresponde a A4
-
-  Serial.begin(115200);
-
-  // Conectarse a la red Wi-Fi
-  WiFi.begin(ssid, password);
-  Serial.print("Conectando a ");
-  Serial.print(ssid);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println(" Conectado");
-
-  // Loop principal
-  while (true) {
-    obtenerLetra(); // Llama a la función para obtener el valor de la letra
-    delay(1500); // Espera antes de volver a leer los sensores
-  }
+ delay(1000);
 }
 
-void loop() {
-  // No se necesita código aquí, todo está en la función setup()
-}
-
-void obtenerLetra() {
-  int lecturaPulgar = analogRead(32); // GPIO 32 corresponde a A0
-  int lecturaIndice = analogRead(33); // GPIO 33 corresponde a A1
-  int lecturaMedio = analogRead(34); // GPIO 34 corresponde a A2
-  int lecturaAnular = analogRead(35); // GPIO 35 corresponde a A3
-  int lecturaMenique = analogRead(25); // GPIO 36 corresponde a A4
-
-    int  suma=0;
-    int finalletra = suma;
+void loop(void ) {
+  lecturaPulgar = analogRead(pulgar);
+  lecturaIndice = analogRead(indice);
+  lecturaMedio = analogRead(medio);
+  lecturaAnular = analogRead(anular);
+  lecturaMenique = analogRead(menique);
   Serial.print(lecturaPulgar);
   Serial.print(",");
   Serial.print(lecturaIndice);
@@ -179,27 +170,5 @@ void obtenerLetra() {
     Serial.println(finalletra);
     delay(300);
   }
-  // Realizar solicitud HTTP
-  HTTPClient http;
 
-  Serial.print("Realizando solicitud HTTP...");
-
-  // Construir la URL con el resultado de la letra
-  String url = "https://api-kbj.onrender.com/api_KBJ/letra/" + String(finalletra);
-  http.begin(url);
-
-  int httpCode = http.GET();
-
-  if (httpCode > 0) {
-    Serial.print("Código de estado HTTP: ");
-    Serial.println(httpCode);
-
-    String payload = http.getString();
-    Serial.println("Respuesta del servidor:");
-    Serial.println(payload);
-  } else {
-    Serial.println("Error en la solicitud HTTP");
-  }
-
-  http.end();  // Cerrar la conexión HTTP
 }
